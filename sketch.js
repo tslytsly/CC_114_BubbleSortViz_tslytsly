@@ -9,8 +9,9 @@
 let values = [];
 let loops = 0;
 let swaps = 0;
+let cycles = 1;
 let lines = false;
-let numLines = 50;
+let numLines = 300;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
@@ -25,20 +26,21 @@ function draw() {
 	background(0);
 
 	if (loops < values.length) {
-		// for (j = 0; j < values.length - loops - 1; j++) {
-		// 	let a = values[j];
-		// 	let b = values[j + 1];
-		// 	if (a > b) {
-		// 		swap(values, j, j + 1);
-		// 	}
-		// }
 		if (swaps < values.length - loops - 1) {
-			let a = values[swaps];
-			let b = values[swaps + 1];
-			if (a > b) {
-				swap(values, swaps, swaps + 1);
-			}
-			swaps++;
+      
+      
+      if (numLines > 50) cycles = 10;
+      else if (numLine > 200) cycles = 50;
+      else if (numLine > 500) cycles = 100;      
+      
+        for (i = 0; i < cycles; i++) {
+          let a = values[swaps];
+					let b = values[swaps + 1];
+					if (a > b) {
+						swap(values, swaps, swaps + 1);
+					}
+					swaps++;
+        }
 		} else {
 			console.log('swap complete, restarting');
 			swaps = 0;
@@ -57,7 +59,7 @@ function draw() {
 		if (lines) {
 			line(location, height, location, height - values[i]);
 		} else {
-			noStroke();
+			if (cycles <= 10) noStroke();
 			fill(col);
 			rect(location, height - values[i], width / numLines-1, height);
 		}
